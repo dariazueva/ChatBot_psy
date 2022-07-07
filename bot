@@ -1,0 +1,213 @@
+import telebot
+from telebot import types
+
+bot = telebot.TeleBot('Ваш токен')
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+    item1 = types.KeyboardButton('😡Злюсь')
+    item2 = types.KeyboardButton('😢 Грущу')
+    item3 = types.KeyboardButton('😟 Тревожусь')
+    item4 = types.KeyboardButton('😕 Скучаю')
+    item5 = types.KeyboardButton('😐 Спокоен')
+    item6 = types.KeyboardButton('😁 Радуюсь')
+    markup.add(item1, item2, item3, item4, item5, item6)
+
+    mess = f'Здравствуйте, <b>{message.from_user.first_name}!</b> Каково ваше эмоциональное состояние сейчас?'
+    bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
+
+@bot.message_handler(content_types=['text'])
+def bot_message(message):
+    if message.chat.type == 'private':
+        if message.text == '😡Злюсь':
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            item1=types.KeyboardButton('📝 Практика')
+            item2=types.KeyboardButton('✉️ Задание')
+            item3=types.KeyboardButton('☁️ Медитация')
+            item4=types.KeyboardButton('Назад')
+            markup.add(item1, item2, item3, item4)
+
+            bot.send_message(message.chat.id, 'Что помогает вам выразить злость?', parse_mode='html', reply_markup=markup)
+
+        elif message.text == '😢 Грущу':
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            item1=types.KeyboardButton('🎧 Музыка')
+            item2=types.KeyboardButton('🧘🏼 Медитация')
+            item3=types.KeyboardButton('🗒 Практика')
+            item4=types.KeyboardButton('Назад')
+            markup.add(item1, item2, item3, item4)
+
+            bot.send_message(message.chat.id, 'Что вам помогает улучшить свое состояние?', parse_mode='html', reply_markup=markup)
+
+        elif message.text == '😟 Тревожусь':
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            item1=types.KeyboardButton('🏋🏻‍♀ ️Спорт')
+            item2=types.KeyboardButton('🎹 Музыка')
+            item3=types.KeyboardButton('🧘🏻‍♂️ Медитация')
+            item4=types.KeyboardButton('💬 Что-нибудь новенькое?')
+            item5=types.KeyboardButton('Назад')
+            markup.add(item1, item2, item3, item4, item5)
+
+            bot.send_message(message.chat.id, 'Что помогает вам уменьшить уровень тревожности?', parse_mode='html', reply_markup=markup)
+
+        elif message.text == '😕 Скучаю':
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            item1=types.KeyboardButton('🤾🏻‍♂️ ️Спорт')
+            item2=types.KeyboardButton('🎼 Музыка')
+            item3=types.KeyboardButton('💫 Медитация')
+            item4=types.KeyboardButton('🔷 Что-нибудь новенькое?')
+            item5=types.KeyboardButton('Назад')
+            markup.add(item1, item2, item3, item4, item5)
+
+            bot.send_message(message.chat.id, 'Что помогает вам избавиться от скуки?', parse_mode='html', reply_markup=markup)
+
+        elif message.text == '😐 Спокоен':
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            item1=types.KeyboardButton('🤸🏻 ️Спорт')
+            item2=types.KeyboardButton('🎤 Подкаст')
+            item3=types.KeyboardButton('✨️ Медитация')
+            item4=types.KeyboardButton('🧩 Задание')
+            item5=types.KeyboardButton('Назад')
+            markup.add(item1, item2, item3, item4, item5)
+
+            bot.send_message(message.chat.id, 'Вы молодец! Давайте попробуем закрепить это состояние?', parse_mode='html', reply_markup=markup)
+
+        elif message.text == '😁 Радуюсь':
+             bot.send_message(message.chat.id, 'Умница! Так держать!', parse_mode='html')
+
+
+   #Злюсь
+
+        elif message.text == '📝 Практика':
+            bot.send_message(message.chat.id, "Практика выражения гнева: ")
+            bot.send_photo(message.chat.id, open("praktika_gnev.png", 'rb'))
+
+        elif message.text == '✉️ Задание':
+            bot.send_message(message.chat.id, "<b> Практика 'Написание письма':</b>\n Письмо обиды – это психологическая практика, "
+            "направленная на работу с накопившимися эмоциями по отношению к какому-либо другому человеку. "
+            "Оно заключается в том, что вместо высказывания человеку 'в глаза' всего, что у вас накипело, "
+            "вы выражаете ваши эмоции на бумаге, работая с каждым негативным чувством последовательно.", parse_mode='html')
+            bot.send_photo(message.chat.id, open("pismo1.png", 'rb'))
+            bot.send_photo(message.chat.id, open("pismo2.png", 'rb'))
+            bot.send_photo(message.chat.id, open("pismo3.png", 'rb'))
+
+        elif message.text == '☁️ Медитация':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=6g-4Elg0ilw")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Медитация по избавлению от гнева', parse_mode='html', reply_markup=keyboard)
+
+
+    #Грущу
+
+
+        elif message.text == '🎧 Музыка':
+            bot.send_message(message.chat.id, "Загружаем. Подождите")
+            bot.send_audio(message.chat.id, open("music.wav", 'rb'))
+
+        elif message.text == '🧘🏼 Медитация':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=QKx80gdNEJQ")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Медитация по избавлению от печали', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '🗒 Практика':
+            bot.send_message(message.chat.id, "Практика благодарности: ")
+            bot.send_photo(message.chat.id, open("praktika_blago.png", 'rb'))
+
+
+
+
+
+  #Тревожусь
+
+        elif message.text == '🏋🏻‍♀ ️Спорт':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=g_tea8ZNk5A")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Тренировка по растяжке', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '🎹 Музыка':
+            bot.send_message(message.chat.id, "Загружаем. Подождите")
+            bot.send_audio(message.chat.id, open("zvuki_prirodi.wav", 'rb'))
+
+        elif message.text == '🧘🏻‍♂️ Медитация':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=cw4N5TXpII0")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Медитация избавления от тревоги', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '💬 Что-нибудь новенькое?':
+            bot.send_message(message.chat.id, "Практика для успокоения ума:")
+            bot.send_photo(message.chat.id, open("praktika.png", 'rb'))
+
+
+
+#Скучаю
+
+        elif message.text == '🤾🏻‍♂️ ️Спорт':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=7W63cIUA9MM&t=425s")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Пилатес', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '🎼 Музыка':
+            bot.send_message(message.chat.id, "Загружаем. Подождите")
+            bot.send_audio(message.chat.id, open("music.wav", 'rb'))
+
+        elif message.text == '💫 Медитация':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=21qx_CEohQk")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Медитация благодарности', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '🔷 Что-нибудь новенькое?':
+            bot.send_message(message.chat.id, "Откуда вы черпаете силы для того, чтобы прожить этот день? "
+            "Давайте вместе определим занятия, которые приносят вам силы и удовольствие сейчас!")
+            bot.send_photo(message.chat.id, open("praktika1.png", 'rb'))
+
+
+      #Спокоен
+
+
+        elif message.text == '🤸🏻 ️Спорт':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=kcswbxqOERQ")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Интенсивная тренировка', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '🎤 Подкаст':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=AefN8BYW4cY")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Подкаст об осознанной работе с эмоциями', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '✨️ Медитация':
+            keyboard = types.InlineKeyboardMarkup()
+            url = types.InlineKeyboardButton(text="Нажмите сюда", url="https://www.youtube.com/watch?v=v_8qsB6MQyU")
+            keyboard.add(url)
+
+            bot.send_message(message.chat.id, 'Медитация осознанности', parse_mode='html', reply_markup=keyboard)
+
+        elif message.text == '🧩 Задание':
+            bot.send_message(message.chat.id, "Задание: понаблюдайте за собой!")
+            bot.send_photo(message.chat.id, open("praktika_nabludeniya.png", 'rb'))
+
+
+        elif message.text == 'Назад':
+            start(message)
+            return
+
+
+
+
+bot.polling(none_stop=True)
